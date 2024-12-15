@@ -1,3 +1,5 @@
+## osu-tournament-manager
+
 I'm ngl I have no idea what to call this project lmfao
 
 Anyway, what I'm *trying* to do is basically a replacement for osu! tournament spreadsheets. 
