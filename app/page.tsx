@@ -11,7 +11,12 @@ export default function Home() {
       {session.data ? (
         <Button onClick={() => signOut()}>Sign out</Button>
       ) : (
-        <Button onClick={() => signIn()}>Sign in!</Button>
+        <Button onClick={() => signIn("osu")}>Sign in!</Button>
+      )}
+      {session.data && (
+        <div>
+          <p>Signed in as {session.data.user?.name}</p>
+        </div>
       )}
       <DarkThemeToggle />
     </main>
