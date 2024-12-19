@@ -1,7 +1,7 @@
 "use client";
 
+import { OsuUserProvider } from "@/providers/user-provider";
 import { SessionProvider } from "next-auth/react";
-import { OsuUserProvider } from "./providers/user-provider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
