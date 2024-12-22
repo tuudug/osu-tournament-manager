@@ -16,7 +16,8 @@
     "next-auth": "^4.24.11",
     "osu-api-v2-js": "^1.1.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-icons": "^5.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",
