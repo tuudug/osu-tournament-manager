@@ -2,7 +2,14 @@ import * as osu from "osu-api-v2-js";
 
 let apiInstance: osu.API | null = null;
 
-export async function getOsuClient() {
+interface ClientProps {
+  token?: string;
+}
+
+export async function getOsuClient({ token }: ClientProps) {
+  console.log("Getting osu! client");
+  console.log(token);
+
   if (apiInstance) return apiInstance;
 
   const clientId = process.env.OSU_CLIENT_ID;
@@ -12,6 +19,11 @@ export async function getOsuClient() {
     throw new Error("Missing osu! client ID or secret");
   }
 
-  apiInstance = await osu.API.createAsync(Number(clientId), clientSecret);
+  apiInstance = await osu.API.createAsync(
+    Number(clientId),
+    clientSecret,
+    undefined,
+    { access_token: token },
+  );
   return apiInstance;
 }
