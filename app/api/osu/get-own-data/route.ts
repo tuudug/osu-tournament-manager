@@ -11,8 +11,6 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    console.log("server token:");
-    console.log(session.accessToken);
     const client = await getOsuClient({ token: session.accessToken });
     const user = await client.getResourceOwner();
     return NextResponse.json({ user });

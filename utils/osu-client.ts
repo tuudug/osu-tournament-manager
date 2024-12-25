@@ -7,9 +7,6 @@ interface ClientProps {
 }
 
 export async function getOsuClient({ token }: ClientProps) {
-  console.log("Getting osu! client");
-  console.log(token);
-
   if (apiInstance) return apiInstance;
 
   const clientId = process.env.OSU_CLIENT_ID;
