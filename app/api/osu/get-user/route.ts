@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOsuClient } from "@/utils/osu-client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/utils/auth-options";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
