@@ -59,13 +59,15 @@ export default function TournamentsList() {
   }
 
   return (
-    <div className="m-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+    <div className="m-4">
+      <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
         Tournaments
       </h2>
-      {tournaments.map((tournament) => (
-        <Tournament key={tournament.id} data={tournament} />
-      ))}
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {tournaments.map((tournament) => (
+          <Tournament key={tournament.id} data={tournament} />
+        ))}
+      </div>
     </div>
   );
 }

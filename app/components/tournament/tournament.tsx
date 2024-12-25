@@ -2,12 +2,15 @@
 
 import { Database } from "@/types/supabase/types";
 import { Card, Button } from "flowbite-react";
+import { useRouter } from "next/navigation";
 
 interface TournamentProps {
   data: Database["public"]["Tables"]["tournament"]["Row"];
 }
 
 export default function Tournament({ data }: TournamentProps) {
+  const router = useRouter();
+
   return (
     <Card>
       <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -29,7 +32,11 @@ export default function Tournament({ data }: TournamentProps) {
             {data.rank_limit_lower} - #{data.rank_limit_upper}
           </p>
         )}
-        <Button color="green" className="mt-4 w-full">
+        <Button
+          color="green"
+          className="mt-4 w-full"
+          onClick={() => router.push(`/tournament/${data.id}`)}
+        >
           Go
         </Button>
       </div>
