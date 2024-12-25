@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeModeScript } from "flowbite-react";
+import { DarkThemeToggle, ThemeModeScript } from "flowbite-react";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -22,6 +22,9 @@ export default function RootLayout({
         <ThemeModeScript />
       </head>
       <body className={inter.className}>
+        <div className="absolute bottom-2 left-2">
+          <DarkThemeToggle />
+        </div>
         <Providers>{children}</Providers>
       </body>
     </html>
