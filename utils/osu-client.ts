@@ -19,11 +19,12 @@ export async function getOsuClient({ token }: ClientProps) {
     throw new Error("Missing osu! client ID or secret");
   }
 
-  apiInstance = await osu.API.createAsync(
-    Number(clientId),
-    clientSecret,
-    undefined,
-    { access_token: token },
-  );
+  apiInstance = await osu.API.createAsync(Number(clientId), clientSecret);
+
+  if (token) {
+    apiInstance.access_token = token;
+    apiInstance.scopes = ["identify", "public"];
+  }
+
   return apiInstance;
 }

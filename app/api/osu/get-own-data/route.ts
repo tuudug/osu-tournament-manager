@@ -5,13 +5,14 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
+    console.log("server token:");
+    console.log(session.accessToken);
     const client = await getOsuClient({ token: session.accessToken });
     const user = await client.getResourceOwner();
     return NextResponse.json({ user });
