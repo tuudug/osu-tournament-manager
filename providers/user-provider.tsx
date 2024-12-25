@@ -1,24 +1,27 @@
-"use client";
-
+import { createContext, useContext, ReactNode, useState } from "react";
 import { User } from "osu-api-v2-js";
-import React, { createContext, useContext, ReactNode, useState } from "react";
 
-const OsuContext = createContext<User | undefined>(undefined);
+interface UserContextType {
+  user: User | undefined;
+  setUser: (user: User) => void;
+}
 
-export function useOsuUser() {
-  const context = useContext(OsuContext);
-  if (!context) {
-    throw new Error("useOsu must be used within an OsuProvider");
+const UserContext = createContext<UserContextType | undefined>(undefined);
+
+export function UserProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User>();
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+
+export function useUser() {
+  const context = useContext(UserContext);
+  if (context === undefined) {
+    throw new Error("useUser must be used within a UserProvider");
   }
   return context;
-}
-
-interface OsuProviderProps {
-  children: ReactNode;
-}
-
-export function OsuUserProvider({ children }: OsuProviderProps) {
-  const [user, setUser] = useState<User | undefined>(undefined);
-
-  return <OsuContext.Provider value={user}>{children}</OsuContext.Provider>;
 }
