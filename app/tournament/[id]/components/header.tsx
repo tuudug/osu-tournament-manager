@@ -1,14 +1,13 @@
 "use client";
 
+import { HeaderAvatar } from "@/app/components/avatar";
 import { useUser } from "@/providers/user-provider";
-import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
-import { signIn, signOut } from "next-auth/react";
+import { Button, Navbar } from "flowbite-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { HiArrowLeft } from "react-icons/hi";
 
 export function TournamentHeader() {
-  const { user } = useUser();
   const params = useParams();
   const tournamentId = params.id;
   const router = useRouter();
@@ -29,36 +28,7 @@ export function TournamentHeader() {
         </div>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={
-            <Avatar
-              alt="User settings"
-              img={user ? `https://a.ppy.sh/${user?.id}` : "https://a.ppy.sh/1"}
-              rounded
-            />
-          }
-        >
-          <Dropdown.Header>
-            {user && (
-              <span className="block text-sm">
-                Signed in as {user?.username}
-              </span>
-            )}
-            {!user && <span className="block text-sm">Not signed in</span>}
-          </Dropdown.Header>
-          {user && (
-            <Dropdown.Item onClick={() => signOut()}>Sign out</Dropdown.Item>
-          )}
-          {!user && (
-            <Dropdown.Item
-              onClick={() => signIn("osu", { callbackUrl: "/auth" })}
-            >
-              Sign in
-            </Dropdown.Item>
-          )}
-        </Dropdown>
+        <HeaderAvatar />
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
