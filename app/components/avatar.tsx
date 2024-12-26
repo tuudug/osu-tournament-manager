@@ -27,7 +27,7 @@ export function HeaderAvatar() {
         <Dropdown.Item onClick={() => signOut()}>Sign out</Dropdown.Item>
       )}
       {!user && (
-        <Dropdown.Item onClick={() => signIn("osu", { callbackUrl: "/auth" })}>
+        <Dropdown.Item onClick={() => signIn("osu", { callbackUrl: "/" })}>
           Sign in
         </Dropdown.Item>
       )}
