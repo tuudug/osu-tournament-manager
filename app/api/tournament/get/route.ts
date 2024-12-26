@@ -24,8 +24,6 @@ export async function GET(request: NextRequest) {
       const data: Database["public"]["Tables"]["tournament"]["Row"][] | null =
         query.data;
 
-      console.log(query);
-
       if (!data || data.length == 0) {
         return NextResponse.json({ error: "No data" }, { status: 404 });
       }
