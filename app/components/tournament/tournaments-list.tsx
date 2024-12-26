@@ -16,7 +16,9 @@ export default function TournamentsList() {
       try {
         const response = await fetch("/api/tournament/get");
         if (!response.ok) {
-          throw new Error("Failed to fetch tournaments");
+          throw new Error(
+            "Failed to fetch tournaments - Maybe you're not logged in",
+          );
         }
         const { data } = await response.json();
         setTournaments(data);
