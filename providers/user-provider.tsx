@@ -6,7 +6,7 @@ import {
   useEffect,
 } from "react";
 import { User } from "osu-api-v2-js";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 interface UserContextType {
   user: User | undefined;
@@ -28,6 +28,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         try {
           const response = await fetch(`/api/osu/get-own-data`);
           if (!response.ok) {
+            signOut();
             throw new Error("Failed to fetch user data");
           }
           const json = await response.json();
