@@ -32,16 +32,19 @@ export function TournamentHeader() {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link
-          as={Link}
-          href={`/tournament/${tournamentId}/mappool`}
-          active
-        >
+        <Navbar.Link as={Link} href={`/tournament/${tournamentId}`}>
+          Main
+        </Navbar.Link>
+        <Navbar.Link as={Link} href={`/tournament/${tournamentId}/mappool`}>
           Mappool
         </Navbar.Link>
-        <div className="cursor-not-allowed text-gray-400">Schedule</div>
-        <div className="cursor-not-allowed   text-gray-400">Teams</div>
-        <div className="cursor-not-allowed   text-gray-400">Statistics</div>
+        <div className="cursor-not-allowed text-gray-400 opacity-50">
+          Schedule
+        </div>
+        <div className="cursor-not-allowed text-gray-400 opacity-50">Teams</div>
+        <div className="cursor-not-allowed text-gray-400 opacity-50">
+          Statistics
+        </div>
         <div className="w-[64px]" />
       </Navbar.Collapse>
     </Navbar>
