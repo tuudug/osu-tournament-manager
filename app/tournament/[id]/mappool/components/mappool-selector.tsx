@@ -1,11 +1,12 @@
 "use client";
 
+import { Database } from "@/types/supabase/types";
 import { Button } from "flowbite-react";
 
 interface MappoolSelectorProps {
-  pools: string[];
-  selectedPool: string;
-  onPoolSelect: (pool: string) => void;
+  pools: Database["public"]["Tables"]["tournament_mappool"]["Row"][];
+  selectedPool: Database["public"]["Tables"]["tournament_mappool"]["Row"];
+  onPoolSelect: (pool: number) => void;
 }
 
 export default function MappoolSelector({
@@ -19,13 +20,13 @@ export default function MappoolSelector({
         <div className="flex space-x-2">
           {pools.map((pool) => (
             <Button
-              key={pool}
-              onClick={() => onPoolSelect(pool)}
+              key={pool.name}
+              onClick={() => onPoolSelect(pool.id)}
               color={selectedPool === pool ? "blue" : "gray"}
               size="sm"
               className="shrink-0"
             >
-              {pool}
+              {pool.name}
             </Button>
           ))}
         </div>

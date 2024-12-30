@@ -16,6 +16,7 @@ interface MapProps {
 }
 
 export default function MapCard({
+  mapId,
   identifier,
   comment,
   pooler,
@@ -120,8 +121,23 @@ export default function MapCard({
             </div>
           </div>
           <div className="flex justify-between gap-2">
-            <Button className="w-1/2">Beatmap Page</Button>
-            <Button color={"pink"} className="w-1/2">
+            <Button
+              as="a"
+              href={`https://osu.ppy.sh/b/${mapId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-1/2"
+            >
+              Beatmap Page
+            </Button>
+            <Button
+              color={"pink"}
+              as="a"
+              href={`osu://b/${mapId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-1/2"
+            >
               osu!direct
             </Button>
           </div>
