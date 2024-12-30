@@ -113,6 +113,7 @@ export type Database = {
       }
       tournament_mappool_map: {
         Row: {
+          comment: string | null
           created_at: string
           id: number
           map_data: Json | null
@@ -123,6 +124,7 @@ export type Database = {
           pooler_id: number
         }
         Insert: {
+          comment?: string | null
           created_at?: string
           id?: number
           map_data?: Json | null
@@ -133,6 +135,7 @@ export type Database = {
           pooler_id: number
         }
         Update: {
+          comment?: string | null
           created_at?: string
           id?: number
           map_data?: Json | null
