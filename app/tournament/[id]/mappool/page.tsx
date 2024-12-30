@@ -103,7 +103,7 @@ export default function Mappool() {
     <div className="min-h-screen dark:bg-gray-800">
       <TournamentHeader />
 
-      <div className="container mx-4">
+      <div className="container mx-auto max-w-[95%] px-4">
         {isLoading ? (
           <LoadingSkeleton />
         ) : !user ? (
@@ -137,7 +137,7 @@ export default function Mappool() {
                         {prefix === "FM" && "FreeMod"}
                         {prefix === "TB" && "Tiebreaker"}
                       </h2>
-                      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {sortMaps(maps).map((map) => (
                           <MapCard
                             key={map.id}
