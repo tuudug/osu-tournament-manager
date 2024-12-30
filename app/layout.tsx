@@ -22,7 +22,7 @@ export default function RootLayout({
         <ThemeModeScript />
       </head>
       <body className={inter.className}>
-        <div className="absolute bottom-2 left-2">
+        <div className="fixed bottom-2 left-2">
           <DarkThemeToggle />
         </div>
         <Providers>{children}</Providers>
