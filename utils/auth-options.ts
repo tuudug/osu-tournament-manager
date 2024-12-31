@@ -1,6 +1,6 @@
-import OsuProvider from "@/app/lib/auth/OsuProvider";
 import { AuthOptions, Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
+import OsuProvider from "./osu-provider";
 
 export const authOptions: AuthOptions = {
   providers: [
