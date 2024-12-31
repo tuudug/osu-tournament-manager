@@ -6,12 +6,15 @@ import { useEffect, useState } from "react";
 import MappoolSelector from "./components/mappool-selector";
 import MapCard from "./components/map-card";
 import { useUser } from "@/providers/user-provider";
+import MapCardCompact from "./components/map-card-compact";
+import { Button } from "flowbite-react";
 
 export default function Mappool() {
   const { id } = useParams();
   const [mappools, setMappools] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useUser();
+  const [isCompactView, setIsCompactView] = useState(false);
 
   interface MapPoolType {
     id: number;
@@ -110,15 +113,27 @@ export default function Mappool() {
           <EmptyState />
         ) : (
           <>
-            {mappools.length > 0 && selectedPool && (
-              <MappoolSelector
-                pools={mappools}
-                selectedPool={
-                  mappools.find((p) => p.id === selectedPool.id) || mappools[0]
-                }
-                onPoolSelect={handlePoolSelect}
-              />
-            )}
+            <div className="mb-4 flex items-center justify-between">
+              {mappools.length > 0 && selectedPool && (
+                <MappoolSelector
+                  pools={mappools}
+                  selectedPool={
+                    mappools.find((p) => p.id === selectedPool.id) ||
+                    mappools[0]
+                  }
+                  onPoolSelect={handlePoolSelect}
+                />
+              )}
+              <Button
+                color="gray"
+                size="sm"
+                onClick={() => setIsCompactView(!isCompactView)}
+              >
+                {isCompactView
+                  ? "Switch to Normal View"
+                  : "Switch to Compact View"}
+              </Button>
+            </div>
 
             {selectedPool && (
               <div className="space-y-8">
@@ -137,17 +152,34 @@ export default function Mappool() {
                         {prefix === "FM" && "FreeMod"}
                         {prefix === "TB" && "Tiebreaker"}
                       </h2>
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {sortMaps(maps).map((map) => (
-                          <MapCard
-                            key={map.id}
-                            mapId={map.osu_map_id}
-                            identifier={`${prefix}${map.map_number}`}
-                            comment={map.comment}
-                            pooler={map.pooler}
-                            mapData={map.map_data}
-                          />
-                        ))}
+                      <div
+                        className={`grid gap-4 ${
+                          isCompactView
+                            ? "grid-cols-1"
+                            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                        }`}
+                      >
+                        {sortMaps(maps).map((map) =>
+                          isCompactView ? (
+                            <MapCardCompact
+                              key={map.id}
+                              mapId={map.osu_map_id}
+                              identifier={`${prefix}${map.map_number}`}
+                              comment={map.comment}
+                              pooler={map.pooler}
+                              mapData={map.map_data}
+                            />
+                          ) : (
+                            <MapCard
+                              key={map.id}
+                              mapId={map.osu_map_id}
+                              identifier={`${prefix}${map.map_number}`}
+                              comment={map.comment}
+                              pooler={map.pooler}
+                              mapData={map.map_data}
+                            />
+                          ),
+                        )}
                       </div>
                     </div>
                   ))}
