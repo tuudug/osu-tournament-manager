@@ -13,6 +13,8 @@ interface MapProps {
   comment?: string;
   pooler: string;
   mapData?: OsuMapData;
+  isSelected?: boolean;
+  onSelect?: () => void;
 }
 
 export default function MapCard({
@@ -21,6 +23,8 @@ export default function MapCard({
   comment,
   pooler,
   mapData,
+  isSelected,
+  onSelect,
 }: MapProps) {
   const formatLength = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -75,7 +79,22 @@ export default function MapCard({
           {pooler}
         </span>
       </div>
-      <Card className="dark:bg-gray-800">
+      <Card
+        className={`dark:bg-gray-800 ${isSelected ? "bg-red-100 dark:bg-red-900/30" : ""}`}
+      >
+        <div className="mb-2 flex items-center justify-between">
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={onSelect}
+              className="size-4 text-red-600"
+            />
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              Picked/Banned
+            </span>
+          </label>
+        </div>
         <div className="relative">
           <img
             src={`https://assets.ppy.sh/beatmaps/${mapData.beatmapSetId}/covers/cover.jpg`}

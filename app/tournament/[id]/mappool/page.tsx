@@ -15,6 +15,7 @@ export default function Mappool() {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useUser();
   const [isCompactView, setIsCompactView] = useState(false);
+  const [selectedMaps, setSelectedMaps] = useState<string[]>([]);
 
   interface MapPoolType {
     id: number;
@@ -70,6 +71,14 @@ export default function Mappool() {
 
   const sortMaps = (maps: any[]) => {
     return [...maps].sort((a, b) => a.map_number - b.map_number);
+  };
+
+  const handleMapSelect = (mapId: string) => {
+    setSelectedMaps((prev) =>
+      prev.includes(mapId)
+        ? prev.filter((id) => id !== mapId)
+        : [...prev, mapId],
+    );
   };
 
   const LoadingSkeleton = () => (
@@ -168,6 +177,8 @@ export default function Mappool() {
                               comment={map.comment}
                               pooler={map.pooler}
                               mapData={map.map_data}
+                              isSelected={selectedMaps.includes(map.osu_map_id)}
+                              onSelect={() => handleMapSelect(map.osu_map_id)}
                             />
                           ) : (
                             <MapCard
@@ -177,6 +188,8 @@ export default function Mappool() {
                               comment={map.comment}
                               pooler={map.pooler}
                               mapData={map.map_data}
+                              isSelected={selectedMaps.includes(map.osu_map_id)}
+                              onSelect={() => handleMapSelect(map.osu_map_id)}
                             />
                           ),
                         )}
