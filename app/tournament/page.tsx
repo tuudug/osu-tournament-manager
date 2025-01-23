@@ -1,5 +1,5 @@
 import { Header } from "../components/header";
-import TournamentsList from "../components/tournament/tournaments-list";
+import TournamentsList from "./components/tournaments-list";
 
 export default function TournamentsPage() {
   return (

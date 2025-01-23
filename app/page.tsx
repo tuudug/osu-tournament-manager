@@ -40,7 +40,7 @@ export default function Home() {
                 </Button>
               </div>
             ) : (
-              <Button size="lg" onClick={() => router.push("/tournaments")}>
+              <Button size="lg" onClick={() => router.push("/tournament")}>
                 View Tournaments
               </Button>
             )}

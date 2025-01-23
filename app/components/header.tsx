@@ -31,7 +31,7 @@ export function Header() {
             Home
           </div>
         </Navbar.Link>
-        <Navbar.Link href="/tournaments" as={Link}>
+        <Navbar.Link href="/tournament" as={Link}>
           <div className="flex items-center gap-2 text-gray-900 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white">
             <GiTrophy className="text-lg" />
             Tournaments
