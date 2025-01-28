@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "flowbite-react";
-import { HeaderAvatar } from "./avatar";
+import { HeaderAvatar } from "../common/avatar";
 import Link from "next/link";
 import { AiFillHome } from "react-icons/ai";
 import { GiTrophy } from "react-icons/gi";

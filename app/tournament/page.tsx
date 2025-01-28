@@ -1,4 +1,4 @@
-import { Header } from "../components/header";
+import { Header } from "../components/layout/header";
 import TournamentsList from "./components/tournaments-list";
 
 export default function TournamentsPage() {

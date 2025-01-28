@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "flowbite-react";
-import { Header } from "./components/header";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaUserPlus, FaListUl, FaHistory } from "react-icons/fa";
@@ -10,6 +9,7 @@ import { IoMdPeople, IoMdTrophy } from "react-icons/io";
 import { BsCalendarCheck } from "react-icons/bs";
 import { SiOsu } from "react-icons/si"; // Add this import
 import { IoStatsChart } from "react-icons/io5"; // Add this import
+import { Header } from "./components/layout/header";
 
 export default function Home() {
   const { data: session } = useSession();

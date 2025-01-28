@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getOsuClient } from "@/utils/osu-client";
+import { getOsuClient } from "@/services/osu/osu-client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/auth-options";
+import { authOptions } from "@/utils/auth/auth-options";
 import { cookies } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/services/supabase/server";
 import { Database } from "@/types/supabase/types";
 
 export async function GET(request: NextRequest) {

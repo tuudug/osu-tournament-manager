@@ -1,6 +1,6 @@
 "use client";
 
-import { HeaderAvatar } from "@/app/components/avatar";
+import { HeaderAvatar } from "@/app/components/common/avatar";
 import { useUser } from "@/providers/user-provider";
 import { Button, Navbar } from "flowbite-react";
 import Link from "next/link";
