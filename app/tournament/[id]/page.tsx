@@ -2,12 +2,14 @@
 
 import { TournamentHeader } from "./components/header";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Database } from "@/types/supabase/types";
 import { InformationCard } from "./components/information-card";
 import { UpcomingCard } from "./components/upcoming-card";
 import { TournamentNotFound } from "./components/tournament-not-found";
 import { TournamentInfo } from "./components/tournament-info";
+import { Button } from "flowbite-react";
+import { HiPencil } from "react-icons/hi2";
 
 type Tournament = Database["public"]["Tables"]["tournament"]["Row"];
 
@@ -15,6 +17,7 @@ export default function Tournament() {
   const [tournament, setTournament] = useState<Tournament | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTournament = async () => {
@@ -58,6 +61,19 @@ export default function Tournament() {
     <div className="min-h-screen dark:bg-gray-800">
       <TournamentHeader />
       <div className="container mx-auto px-4 py-8">
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            {tournament.name}
+          </h1>
+          <Button
+            onClick={() => router.push(`/tournament/${id}/edit`)}
+            size="sm"
+          >
+            <HiPencil className="mr-2 size-4" />
+            Edit Tournament
+          </Button>
+        </div>
+
         <TournamentInfo tournament={tournament} />
 
         {/* Large Info Cards */}
