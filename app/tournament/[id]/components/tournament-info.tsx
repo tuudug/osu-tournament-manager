@@ -13,13 +13,6 @@ interface TournamentInfoProps {
 export function TournamentInfo({ tournament }: TournamentInfoProps) {
   return (
     <>
-      {/* Tournament Header */}
-      <div className="mb-8 text-center">
-        <h1 className="mb-2 text-4xl font-bold text-gray-900 dark:text-white">
-          {tournament.name}
-        </h1>
-      </div>
-
       {/* Tournament Info Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">

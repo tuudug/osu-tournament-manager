@@ -1,0 +1,103 @@
+.markdown-preview {
+  @apply text-gray-900 dark:text-gray-100;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  @apply mb-4 font-bold;
+}
+
+.markdown-preview h1 {
+  @apply text-3xl;
+}
+
+.markdown-preview h2 {
+  @apply text-2xl;
+}
+
+.markdown-preview h3 {
+  @apply text-xl;
+}
+
+.markdown-preview h4 {
+  @apply text-lg;
+}
+
+.markdown-preview p {
+  @apply mb-4;
+}
+
+.markdown-preview ul,
+.markdown-preview ol {
+  @apply mb-4 ml-6;
+}
+
+.markdown-preview ul {
+  @apply list-disc;
+}
+
+.markdown-preview ol {
+  @apply list-decimal;
+}
+
+.markdown-preview li > ul,
+.markdown-preview li > ol {
+  @apply mb-0 mt-2;
+}
+
+.markdown-preview blockquote {
+  @apply mb-4 border-l-4 border-gray-300 pl-4 dark:border-gray-600;
+}
+
+.markdown-preview code {
+  @apply rounded bg-gray-100 px-1 py-0.5 font-mono text-sm dark:bg-gray-700;
+}
+
+.markdown-preview pre {
+  @apply mb-4 overflow-x-auto rounded-lg bg-gray-100 p-4 dark:bg-gray-700;
+}
+
+.markdown-preview pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-preview table {
+  @apply mb-4 w-full border-collapse;
+}
+
+.markdown-preview th,
+.markdown-preview td {
+  @apply border border-gray-300 px-4 py-2 dark:border-gray-600;
+}
+
+.markdown-preview th {
+  @apply bg-gray-100 font-semibold dark:bg-gray-700;
+}
+
+.markdown-preview a {
+  @apply text-blue-600 hover:underline dark:text-blue-400;
+}
+
+.markdown-preview hr {
+  @apply my-4 border-t border-gray-300 dark:border-gray-600;
+}
+
+.markdown-preview img {
+  @apply max-w-full rounded-lg;
+}
+
+.markdown-preview input[type="checkbox"] {
+  @apply mr-2;
+}
+
+.markdown-preview .task-list-item {
+  @apply list-none;
+}
+
+.markdown-preview .task-list-item-checkbox {
+  @apply mr-2;
+}
