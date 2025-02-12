@@ -23,7 +23,7 @@ export function TournamentHeader() {
             onClick={() => router.push("/")}
           >
             <HiArrowLeft />
-            <div className="ml-1 text-xs">Back to home</div>
+            <div className="ml-1 text-xs">Back to otm!</div>
           </Button>
         </div>
       </Navbar.Brand>
