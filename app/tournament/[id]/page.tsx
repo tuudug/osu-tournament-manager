@@ -62,7 +62,7 @@ export default function Tournament() {
 
         {/* Large Info Cards */}
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <InformationCard />
+          <InformationCard description={tournament.description || ""} />
           <UpcomingCard />
         </div>
       </div>

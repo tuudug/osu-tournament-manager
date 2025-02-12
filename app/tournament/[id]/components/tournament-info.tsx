@@ -18,9 +18,6 @@ export function TournamentInfo({ tournament }: TournamentInfoProps) {
         <h1 className="mb-2 text-4xl font-bold text-gray-900 dark:text-white">
           {tournament.name}
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400">
-          {tournament.description || "No description provided"}
-        </p>
       </div>
 
       {/* Tournament Info Cards */}
