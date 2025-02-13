@@ -126,14 +126,14 @@ export function TournamentForm({
         size="4xl"
         theme={{
           root: {
-            base: "fixed left-0 right-0 top-0 z-50 h-modal h-screen overflow-y-auto overflow-x-hidden md:inset-0 md:h-full",
+            base: "fixed inset-x-0 top-0 z-50 h-modal overflow-y-auto overflow-x-hidden md:inset-0 md:h-full",
             show: {
               on: "flex bg-gray-900/50 dark:bg-gray-900/80",
               off: "hidden",
             },
           },
           content: {
-            base: "relative h-full w-full p-4 md:h-auto",
+            base: "relative size-full p-4 md:h-auto",
             inner:
               "relative max-h-[90vh] rounded-lg bg-white shadow dark:bg-gray-800",
           },
@@ -407,9 +407,21 @@ export function TournamentForm({
         </div>
 
         <div className="flex gap-2">
-          <Button type="submit" disabled={loading} isProcessing={loading}>
-            {submitLabel}
-          </Button>
+          <div className="group relative inline-block">
+            <Button
+              type="submit"
+              disabled={submitLabel === "Create Tournament"}
+              className="bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-600/50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:disabled:bg-blue-600/50"
+            >
+              {submitLabel}
+            </Button>
+            {submitLabel === "Create Tournament" && (
+              <div className="invisible absolute bottom-full left-0 z-50 mb-2 min-w-80 -translate-y-0 whitespace-normal rounded-lg bg-gray-900 px-3 py-2 text-sm text-white opacity-0 transition-all duration-300 before:absolute before:left-4 before:top-full before:border-4 before:border-transparent before:border-t-gray-900 group-hover:visible group-hover:opacity-100 dark:bg-gray-700 dark:before:border-t-gray-700">
+                Tournament creation is disabled in beta, please contact me to
+                create a tournament
+              </div>
+            )}
+          </div>
           <Button
             color="gray"
             type="button"

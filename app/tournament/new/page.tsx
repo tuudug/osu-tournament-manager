@@ -29,7 +29,10 @@ export default function NewTournament() {
         <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">
           Create New Tournament
         </h1>
-        <TournamentForm onSubmit={handleSubmit} submitLabel="Create Tournament" />
+        <TournamentForm
+          onSubmit={handleSubmit}
+          submitLabel="Create Tournament"
+        />
       </div>
     </div>
   );
