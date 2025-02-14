@@ -33,6 +33,8 @@ export function UserProvider({ children, initialUser }: UserProviderProps) {
         .catch((error) => {
           console.error("Error fetching user data:", error);
         });
+    } else if (!session?.accessToken && user) {
+      setUser(null);
     }
   }, [session, user]);
 
