@@ -24,15 +24,13 @@ export const authOptions: AuthOptions = {
             token.accessToken as string,
           );
           if (decodedToken.exp * 1000 < Date.now()) {
-            // Token is expired, clear the session
-            session.accessToken = undefined;
-            return session;
+            // Token is expired, return an empty session
+            return {} as Session;
           }
         } catch (error) {
           // Handle token decoding errors (e.g., invalid token format)
           console.error("Error decoding access token:", error);
-          session.accessToken = undefined;
-          return session; // Clear the session if decoding fails
+          return {} as Session; // Return empty session if decoding fails
         }
         session.accessToken = token.accessToken as string;
       }
