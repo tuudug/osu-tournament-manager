@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "flowbite-react";
-import { useSession, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaUserPlus, FaListUl, FaHistory } from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
@@ -10,9 +10,10 @@ import { BsCalendarCheck } from "react-icons/bs";
 import { SiOsu } from "react-icons/si"; // Add this import
 import { IoStatsChart } from "react-icons/io5"; // Add this import
 import { Header } from "./components/layout/header";
+import { useUser } from "@/providers/user-provider";
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { user } = useUser();
   const router = useRouter();
 
   return (
@@ -27,7 +28,7 @@ export default function Home() {
             A modern solution for managing osu! tournaments
           </p>
           <div className="flex justify-center">
-            {!session ? (
+            {!user ? (
               <div className="rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 p-px">
                 <Button
                   color="dark"
