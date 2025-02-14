@@ -19,6 +19,17 @@
 - `/app/tournament/[id]/components/information-card.tsx` - Tournament information display
 - `/app/tournament/[id]/components/tournament-info.tsx` - Detailed tournament information
 - `/app/tournament/[id]/components/upcoming-card.tsx` - Upcoming matches display
+- `/app/tournament/[id]/components/status-badge.tsx` - Tournament status indicator
+- `/app/tournament/[id]/components/registration-control.tsx` - Registration open/close control
+
+### Team Components
+
+- `/app/tournament/[id]/teams/components/teams-list.tsx` - List of tournament teams
+- `/app/tournament/[id]/teams/components/team-card.tsx` - Team information display
+- `/app/tournament/[id]/teams/components/team-form.tsx` - Team creation/editing form
+- `/app/tournament/[id]/teams/components/invitation-list.tsx` - Team invitations management
+- `/app/tournament/[id]/teams/components/invitation-card.tsx` - Individual invitation display
+- `/app/tournament/[id]/teams/components/team-status-badge.tsx` - Team status indicator
 
 ### Mappool Components
 
@@ -26,12 +37,33 @@
 - `/app/tournament/[id]/mappool/components/map-card-compact.tsx` - Compact map display
 - `/app/tournament/[id]/mappool/components/mappool-selector.tsx` - Mappool selection interface
 
+### Match Components
+
+- `/app/tournament/[id]/match/components/match-card.tsx` - Match information display
+- `/app/tournament/[id]/match/components/match-schedule.tsx` - Match scheduling interface
+- `/app/tournament/[id]/match/components/map-picker.tsx` - Map pick/ban interface
+- `/app/tournament/[id]/match/components/score-tracker.tsx` - Match score tracking
+
+### Bracket Components
+
+- `/app/tournament/[id]/bracket/components/bracket-view.tsx` - Tournament bracket display
+- `/app/tournament/[id]/bracket/components/stage-selector.tsx` - Tournament stage selection
+- `/app/tournament/[id]/bracket/components/match-connector.tsx` - Bracket match connection lines
+
+### Statistics Components
+
+- `/app/tournament/[id]/stats/components/team-stats.tsx` - Team statistics display
+- `/app/tournament/[id]/stats/components/match-stats.tsx` - Match statistics display
+- `/app/tournament/[id]/stats/components/map-stats.tsx` - Map statistics display
+
 ### Referee Components
 
 - `/app/tournament/referee/[id]/components/match.tsx` - Match management interface
 - `/app/tournament/referee/[id]/components/pre-match.tsx` - Pre-match setup
 - `/app/tournament/referee/[id]/components/post-match.tsx` - Post-match results
 - `/app/tournament/referee/[id]/components/sidebar.tsx` - Referee sidebar controls
+- `/app/tournament/referee/[id]/components/map-status.tsx` - Map pick/ban status
+- `/app/tournament/referee/[id]/components/score-input.tsx` - Score input interface
 
 ## Component Hierarchy
 
@@ -47,17 +79,41 @@ Tournament
     ├── Header
     ├── InformationCard
     ├── TournamentInfo
+    ├── StatusBadge
+    ├── RegistrationControl
     ├── UpcomingCard
-    └── Mappool
-        ├── MapCard
-        ├── MapCardCompact
-        └── MappoolSelector
+    ├── Teams
+    │   ├── TeamsList
+    │   ├── TeamCard
+    │   ├── TeamForm
+    │   ├── InvitationList
+    │   ├── InvitationCard
+    │   └── TeamStatusBadge
+    ├── Mappool
+    │   ├── MapCard
+    │   ├── MapCardCompact
+    │   └── MappoolSelector
+    ├── Match
+    │   ├── MatchCard
+    │   ├── MatchSchedule
+    │   ├── MapPicker
+    │   └── ScoreTracker
+    ├── Bracket
+    │   ├── BracketView
+    │   ├── StageSelector
+    │   └── MatchConnector
+    └── Statistics
+        ├── TeamStats
+        ├── MatchStats
+        └── MapStats
 
 Referee
 └── Match
     ├── PreMatch
     ├── PostMatch
-    └── Sidebar
+    ├── Sidebar
+    ├── MapStatus
+    └── ScoreInput
 ```
 
 ## Component Responsibilities
@@ -68,6 +124,39 @@ Referee
   - Form validation
   - Tournament settings configuration
   - Role assignment interface
+  - Tournament lifecycle settings
+
+### Team Management
+
+- `team-form.tsx`: Team creation and editing
+  - Team details configuration
+  - Player invitation interface (for team_size > 1)
+  - Team validation against tournament settings
+- `invitation-list.tsx`: Invitation management
+  - Display pending invitations
+  - Invitation status tracking
+  - Accept/decline actions
+
+### Match Management
+
+- `match-card.tsx`: Match information display
+  - Teams and schedule display
+  - Match status tracking
+  - Score display
+- `map-picker.tsx`: Map pick/ban interface
+  - Pick/ban phase management
+  - Map status tracking
+  - Team turn management
+
+### Bracket Management
+
+- `bracket-view.tsx`: Tournament progression
+  - Stage visualization
+  - Match connections
+  - Progress tracking
+- `stage-selector.tsx`: Tournament stages
+  - Stage navigation
+  - Stage status display
 
 ### Referee Interface
 
@@ -83,6 +172,10 @@ Referee
   - Score submission
   - Results verification
   - Match statistics recording
+- `map-status.tsx`: Map management
+  - Pick/ban tracking
+  - Map order management
+  - Score recording
 
 ### Mappool Management
 
@@ -94,3 +187,14 @@ Referee
   - Map metadata display
   - Difficulty statistics
   - Preview functionality
+
+### Statistics Display
+
+- `team-stats.tsx`: Team performance
+  - Match history
+  - Win/loss records
+  - Score aggregation
+- `map-stats.tsx`: Map analytics
+  - Pick/ban rates
+  - Score distributions
+  - Usage patterns

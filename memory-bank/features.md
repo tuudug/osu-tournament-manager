@@ -15,11 +15,17 @@
   - Team size configuration
   - Rank limits
   - Description and rules
+  - Start and end dates
+  - Registration control
 - Role assignment system
   - Host (full access)
   - Co-host (full access)
   - Referee (match management)
   - Mappooler (mappool management)
+- Tournament lifecycle management
+  - Status tracking (upcoming, ongoing, completed)
+  - Registration period control
+  - Schedule management
 
 ### Tournament Organization
 
@@ -27,14 +33,22 @@
   - Basic tournament details
   - Rules and guidelines
   - Schedule and important dates
+  - Current status and phase
 - Team registration and management
-  - Team creation
+  - Solo player registration
+  - Team creation and invitation system
+  - Team status tracking (pending/confirmed)
   - Player roster management
   - Captain designation
 - Schedule management
-  - Match scheduling
-  - Timeline visualization
+  - Match scheduling with time slots
+  - Tournament timeline visualization
   - Conflict detection
+  - Round management
+- Bracket system
+  - Multiple stage support
+  - Stage progression tracking
+  - Match organization
 
 ## Mappool System
 
@@ -63,10 +77,12 @@
   - Pre-made command templates
   - Quick command access
   - Custom command support
+  - Room ID tracking
 - Match state tracking
   - Ban/Pick phase management
-  - Score tracking
+  - Score tracking per map
   - Team management
+  - Match status updates
 
 ### Match Management
 
@@ -74,20 +90,31 @@
   - Team verification
   - Player readiness checks
   - Map pool availability
+  - Room setup tracking
 - In-match tools
-  - Score tracking
-  - Map pick/ban system
+  - Score tracking per team
+  - Map pick/ban system with history
   - IRC command integration
+  - Real-time status updates
 - Post-match processing
   - Result submission
+  - Winner designation
   - Statistics recording
   - Match history
+  - Score archival
 
 ## Team Management
 
 ### Team Organization
 
 - Team registration system
+  - Single player registration (team_size = 1)
+  - Multi-player team registration
+  - Invitation system for team formation
+- Team status management
+  - Pending/Confirmed states
+  - Team completion tracking
+  - Registration validation based on team_size
 - Player roster management
 - Team captain designation
 - Team statistics tracking
@@ -97,22 +124,28 @@
 - Player rank verification
 - Player participation tracking
 - Role assignment within teams
+- Invitation response handling
 
 ## Statistics and Analytics
 
 ### Tournament Statistics
 
-- Match history
+- Match history with detailed scores
 - Team performance metrics
+  - Matches played/won
+  - Maps played/won
+  - Total score tracking
 - Player statistics
 - Map pick/ban rates
+- Historical data tracking
 
 ### Reporting
 
-- Match results
-- Tournament progress
-- Player performance
-- Map statistics
+- Match results with map details
+- Tournament progress tracking
+- Team performance analytics
+- Map statistics and trends
+- Player performance metrics
 
 ## Integration Features
 
@@ -128,6 +161,7 @@
 - Match lobby management
 - Command automation
 - Match result tracking
+- Room ID management
 
 ## User Interface
 
@@ -142,3 +176,5 @@
 - Match status updates
 - Tournament progress tracking
 - Team and player updates
+- Registration status tracking
+- Invitation notifications

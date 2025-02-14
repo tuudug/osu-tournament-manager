@@ -21,7 +21,9 @@ const mockPlayers: Record<number, Player> = {
   18983: { userId: 18983, username: "Doomsday", rank: "#3,386" },
 };
 
-const mockTeams: (Team & { seed: number })[] = [
+type TeamWithSeed = Team & { seed: number };
+
+const mockTeams: TeamWithSeed[] = [
   {
     id: 1,
     name: "Team Peppy",
@@ -30,6 +32,7 @@ const mockTeams: (Team & { seed: number })[] = [
     player_ids: [2, 18983, 5145352],
     created_at: new Date().toISOString(),
     seed: 1,
+    status: null, // Added to match the type definition
   },
   {
     id: 2,
@@ -39,6 +42,7 @@ const mockTeams: (Team & { seed: number })[] = [
     player_ids: [9918921, 5145352, 18983],
     created_at: new Date().toISOString(),
     seed: 2,
+    status: null, // Added to match the type definition
   },
   {
     id: 3,
@@ -48,6 +52,7 @@ const mockTeams: (Team & { seed: number })[] = [
     player_ids: [9918921, 5145352, 18983],
     created_at: new Date().toISOString(),
     seed: 2,
+    status: null, // Added to match the type definition
   },
   {
     id: 4,
@@ -57,6 +62,7 @@ const mockTeams: (Team & { seed: number })[] = [
     player_ids: [9918921, 5145352, 18983],
     created_at: new Date().toISOString(),
     seed: 2,
+    status: null, // Added to match the type definition
   },
   {
     id: 5,
@@ -66,6 +72,7 @@ const mockTeams: (Team & { seed: number })[] = [
     player_ids: [9918921, 5145352, 18983],
     created_at: new Date().toISOString(),
     seed: 2,
+    status: null, // Added to match the type definition
   },
   {
     id: 6,
@@ -75,10 +82,11 @@ const mockTeams: (Team & { seed: number })[] = [
     player_ids: [9918921, 5145352, 18983],
     created_at: new Date().toISOString(),
     seed: 2,
+    status: null, // Added to match the type definition
   },
 ];
 
-function TeamCard({ team }: { team: (typeof mockTeams)[0] }) {
+function TeamCard({ team }: { team: TeamWithSeed }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
