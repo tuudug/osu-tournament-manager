@@ -1,92 +1,83 @@
 "use client";
 
 import { Database } from "@/types/supabase/types";
-import { Avatar, Card } from "flowbite-react";
-import { useState } from "react";
+import { Avatar, Card, Spinner } from "flowbite-react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi2";
 
 type Team = Database["public"]["Tables"]["tournament_team"]["Row"];
 
 type Player = {
-  userId: number;
+  id: number;
   username: string;
-  rank: string;
+  statistics: {
+    global_rank: number;
+  };
 };
 
-// Mock data for development
-const mockPlayers: Record<number, Player> = {
-  5145352: { userId: 5145352, username: "tutuchan812495", rank: "#3,870" },
-  9918921: { userId: 9918921, username: "moss-", rank: "#78,325" },
-  2: { userId: 2, username: "peppy", rank: "#761,943" },
-  18983: { userId: 18983, username: "Doomsday", rank: "#3,386" },
-};
+function usePlayerDetails(playerId: number) {
+  const [player, setPlayer] = useState<Player | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-type TeamWithSeed = Team & { seed: number };
+  useEffect(() => {
+    async function fetchPlayer() {
+      try {
+        const response = await fetch(`/api/osu/get-user?id=${playerId}`);
+        if (!response.ok) throw new Error("Failed to fetch player");
+        const data = await response.json();
+        setPlayer(data.user);
+      } catch (error) {
+        console.error(`Error fetching player ${playerId}:`, error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-const mockTeams: TeamWithSeed[] = [
-  {
-    id: 1,
-    name: "Team Peppy",
-    tournament_id: 1,
-    captain_id: 2,
-    player_ids: [2, 18983, 5145352],
-    created_at: new Date().toISOString(),
-    seed: 1,
-    status: null, // Added to match the type definition
-  },
-  {
-    id: 2,
-    name: "Team Moss",
-    tournament_id: 1,
-    captain_id: 9918921,
-    player_ids: [9918921, 5145352, 18983],
-    created_at: new Date().toISOString(),
-    seed: 2,
-    status: null, // Added to match the type definition
-  },
-  {
-    id: 3,
-    name: "Team Moss",
-    tournament_id: 1,
-    captain_id: 9918921,
-    player_ids: [9918921, 5145352, 18983],
-    created_at: new Date().toISOString(),
-    seed: 2,
-    status: null, // Added to match the type definition
-  },
-  {
-    id: 4,
-    name: "Team Moss",
-    tournament_id: 1,
-    captain_id: 9918921,
-    player_ids: [9918921, 5145352, 18983],
-    created_at: new Date().toISOString(),
-    seed: 2,
-    status: null, // Added to match the type definition
-  },
-  {
-    id: 5,
-    name: "Team Moss",
-    tournament_id: 1,
-    captain_id: 9918921,
-    player_ids: [9918921, 5145352, 18983],
-    created_at: new Date().toISOString(),
-    seed: 2,
-    status: null, // Added to match the type definition
-  },
-  {
-    id: 6,
-    name: "Team Moss",
-    tournament_id: 1,
-    captain_id: 9918921,
-    player_ids: [9918921, 5145352, 18983],
-    created_at: new Date().toISOString(),
-    seed: 2,
-    status: null, // Added to match the type definition
-  },
-];
+    fetchPlayer();
+  }, [playerId]);
 
-function TeamCard({ team }: { team: TeamWithSeed }) {
+  return { player, isLoading };
+}
+
+function PlayerInfo({ playerId }: { playerId: number }) {
+  const { player, isLoading } = usePlayerDetails(playerId);
+
+  if (isLoading) {
+    return (
+      <div className="animate-pulse">
+        <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="mt-1 h-3 w-16 rounded bg-gray-200 dark:bg-gray-700" />
+      </div>
+    );
+  }
+
+  if (!player) {
+    return (
+      <div>
+        <div className="font-medium text-gray-900 dark:text-white">
+          Unknown Player
+        </div>
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          Rank: N/A
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="font-medium text-gray-900 dark:text-white">
+        {player.username}
+      </div>
+      <div className="text-sm text-gray-500 dark:text-gray-400">
+        #{player.statistics.global_rank.toLocaleString()}
+      </div>
+    </div>
+  );
+}
+
+function TeamCard({ team }: { team: Team }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -95,13 +86,10 @@ function TeamCard({ team }: { team: TeamWithSeed }) {
       onClick={() => setIsExpanded(!isExpanded)}
     >
       {/* Header - Always visible */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center">
         <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
           {team.name}
         </h5>
-        <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
-          Seed #{team.seed}
-        </span>
       </div>
 
       {/* Collapsed View - Player Avatars */}
@@ -144,12 +132,7 @@ function TeamCard({ team }: { team: TeamWithSeed }) {
               />
             </div>
             <div className="flex-1">
-              <div className="font-medium text-gray-900 dark:text-white">
-                {mockPlayers[team.captain_id]?.username}
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                {mockPlayers[team.captain_id]?.rank}
-              </div>
+              <PlayerInfo playerId={team.captain_id} />
             </div>
           </div>
           {/* Other Players */}
@@ -163,12 +146,7 @@ function TeamCard({ team }: { team: TeamWithSeed }) {
                   size="md"
                 />
                 <div className="flex-1">
-                  <div className="font-medium text-gray-900 dark:text-white">
-                    {mockPlayers[playerId]?.username}
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {mockPlayers[playerId]?.rank}
-                  </div>
+                  <PlayerInfo playerId={playerId} />
                 </div>
               </div>
             ))}
@@ -190,9 +168,38 @@ function TeamCard({ team }: { team: TeamWithSeed }) {
 }
 
 export function TeamsList() {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const params = useParams();
+
+  useEffect(() => {
+    async function fetchTeams() {
+      try {
+        const response = await fetch(`/api/tournament/${params.id}/teams`);
+        if (!response.ok) throw new Error("Failed to fetch teams");
+        const data = await response.json();
+        setTeams(data);
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchTeams();
+  }, [params.id]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[calc(100vh-64px)] items-center justify-center">
+        <Spinner size="xl" />
+      </div>
+    );
+  }
+
   return (
     <div className="grid auto-rows-min grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
-      {mockTeams.map((team) => (
+      {teams.map((team) => (
         <div key={team.id} className="self-start">
           <TeamCard team={team} />
         </div>
