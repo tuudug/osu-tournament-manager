@@ -5,6 +5,10 @@ import { signIn, signOut } from "next-auth/react";
 export function HeaderAvatar() {
   const { user } = useUser();
 
+  if (!user) {
+    signOut();
+  }
+
   return (
     <Dropdown
       arrowIcon={false}
