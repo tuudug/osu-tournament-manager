@@ -16,6 +16,7 @@ type Tournament = Database["public"]["Tables"]["tournament"]["Row"];
 export default function Tournament() {
   const [tournament, setTournament] = useState<Tournament | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { id } = useParams();
   const router = useRouter();
 
@@ -26,15 +27,23 @@ export default function Tournament() {
         const json = await response.json();
 
         if (!response.ok) {
-          console.error("Error fetching tournament:", json.error);
+          const errorMessage = json.error || "Failed to fetch tournament data";
+          console.error("Error fetching tournament:", errorMessage);
+          setError(errorMessage);
           setLoading(false);
           return;
         }
 
         setTournament(json.data);
+        setError(null);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching tournament:", error);
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred";
+        console.error("Error fetching tournament:", errorMessage);
+        setError(errorMessage);
         setLoading(false);
       }
     };
@@ -48,6 +57,23 @@ export default function Tournament() {
         <TournamentHeader />
         <div className="flex h-[calc(100vh-64px)] items-center justify-center">
           <Spinner size="xl" />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen dark:bg-gray-800">
+        <TournamentHeader />
+        <div className="flex h-[calc(100vh-64px)] flex-col items-center justify-center gap-4">
+          <div className="text-center text-red-500 dark:text-red-400">
+            <h2 className="mb-2 text-xl font-bold">Error Loading Tournament</h2>
+            <p>{error}</p>
+          </div>
+          <Button onClick={() => router.push("/tournament")} color="gray">
+            Return to Tournaments
+          </Button>
         </div>
       </div>
     );

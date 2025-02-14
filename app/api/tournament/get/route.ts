@@ -24,8 +24,11 @@ export async function GET(request: NextRequest) {
       const data: Database["public"]["Tables"]["tournament"]["Row"][] | null =
         query.data;
 
-      if (!data || data.length == 0) {
-        return NextResponse.json({ error: "No data" }, { status: 404 });
+      if (!data || data.length === 0) {
+        return NextResponse.json(
+          { error: "No tournaments found" },
+          { status: 404 },
+        );
       }
 
       return NextResponse.json({ data });
@@ -38,14 +41,23 @@ export async function GET(request: NextRequest) {
         query.data ? query.data[0] : null;
 
       if (!data) {
-        return NextResponse.json({ error: "No data" }, { status: 404 });
+        return NextResponse.json(
+          { error: `Tournament with ID ${tournamentId} not found` },
+          { status: 404 },
+        );
       }
 
       return NextResponse.json({ data });
     }
   } catch (error) {
+    console.error("Tournament fetch error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Database error occurred";
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      {
+        error: "Failed to fetch tournament data",
+        details: errorMessage,
+      },
       { status: 500 },
     );
   }
