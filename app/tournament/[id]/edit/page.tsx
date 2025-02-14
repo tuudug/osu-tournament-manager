@@ -5,6 +5,7 @@ import { Database } from "@/types/supabase/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Header } from "@/app/components/layout/header";
+import { Spinner } from "flowbite-react";
 
 type Tournament = Database["public"]["Tables"]["tournament"]["Row"];
 type TournamentInsert = Database["public"]["Tables"]["tournament"]["Insert"];
@@ -55,7 +56,7 @@ export default function EditTournament() {
       <div className="min-h-screen dark:bg-gray-800">
         <Header />
         <div className="flex h-[calc(100vh-64px)] items-center justify-center">
-          <div className="size-8 animate-spin rounded-full border-4 border-solid border-t-transparent"></div>
+          <Spinner size="xl" />
         </div>
       </div>
     );

@@ -3,7 +3,7 @@
 import { Database } from "@/types/supabase/types";
 import Tournament from "./tournament";
 import { useEffect, useState } from "react";
-import { Button } from "flowbite-react";
+import { Button, Spinner } from "flowbite-react";
 import { HiPlus } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 
@@ -38,10 +38,8 @@ export default function TournamentsList() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <p className="text-lg text-gray-500 dark:text-gray-400">
-          Loading tournaments...
-        </p>
+      <div className="flex h-[calc(100vh-64px)] items-center justify-center">
+        <Spinner size="xl" />
       </div>
     );
   }

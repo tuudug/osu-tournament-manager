@@ -8,7 +8,7 @@ import { InformationCard } from "./components/information-card";
 import { UpcomingCard } from "./components/upcoming-card";
 import { TournamentNotFound } from "./components/tournament-not-found";
 import { TournamentInfo } from "./components/tournament-info";
-import { Button } from "flowbite-react";
+import { Button, Spinner } from "flowbite-react";
 import { HiPencil } from "react-icons/hi2";
 
 type Tournament = Database["public"]["Tables"]["tournament"]["Row"];
@@ -47,7 +47,7 @@ export default function Tournament() {
       <div className="min-h-screen dark:bg-gray-800">
         <TournamentHeader />
         <div className="flex h-[calc(100vh-64px)] items-center justify-center">
-          <div className="size-8 animate-spin rounded-full border-4 border-solid border-t-transparent"></div>
+          <Spinner size="xl" />
         </div>
       </div>
     );

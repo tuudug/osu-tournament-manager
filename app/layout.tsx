@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { DarkThemeToggle, ThemeModeScript } from "flowbite-react";
 import "./globals.css";
-import { Providers } from "./providers";
+import { SessionProvider } from "./session-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
         <div className="fixed bottom-2 left-2">
           <DarkThemeToggle />
         </div>
-        <Providers>{children}</Providers>
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );
