@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { User } from "osu-api-v2-js";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 interface UserContextType {
   user: User | null | undefined;
@@ -33,6 +33,9 @@ export function UserProvider({ children, initialUser }: UserProviderProps) {
         .catch((error) => {
           console.error("Error fetching user data:", error);
         });
+    } else if (!session?.accessToken && user) {
+      setUser(null);
+      signOut({ redirect: false });
     }
   }, [session, user]);
 
