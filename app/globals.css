@@ -1,4 +1,9 @@
 @tailwind base;
+
+html {
+  overflow-y: scroll;
+}
+
 @tailwind components;
 @tailwind utilities;
 

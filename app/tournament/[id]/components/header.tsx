@@ -41,7 +41,9 @@ export function TournamentHeader() {
         <Navbar.Link as={Link} href={`/tournament/${tournamentId}/schedule`}>
           Schedule
         </Navbar.Link>
-        <div className="cursor-not-allowed text-gray-400 opacity-50">Teams</div>
+        <Navbar.Link as={Link} href={`/tournament/${tournamentId}/teams`}>
+          Teams
+        </Navbar.Link>
         <div className="cursor-not-allowed text-gray-400 opacity-50">
           Statistics
         </div>
