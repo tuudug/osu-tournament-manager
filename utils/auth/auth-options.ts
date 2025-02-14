@@ -18,25 +18,23 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      if (token.accessToken) {
+      // First set the accessToken from the token
+      session.accessToken = token.accessToken as string;
+
+      // Then validate it if it exists
+      if (session.accessToken) {
         try {
-          const decodedToken: { exp: number } = jwtDecode(
-            token.accessToken as string,
-          );
+          const decodedToken: { exp: number } = jwtDecode(session.accessToken);
           if (decodedToken.exp * 1000 < Date.now()) {
-            // Token is expired, return session without accessToken
+            // Only clear if explicitly expired
             session.accessToken = undefined;
-            return session;
           }
         } catch (error) {
-          // Handle token decoding errors (e.g., invalid token format)
           console.error("Error decoding access token:", error);
-          // Return session without accessToken if decoding fails
           session.accessToken = undefined;
-          return session;
         }
-        session.accessToken = token.accessToken as string;
       }
+
       return session;
     },
   },

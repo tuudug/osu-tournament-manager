@@ -6,7 +6,7 @@ import { authOptions } from "@/utils/auth/auth-options";
 export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
+  if (!session?.accessToken) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -17,8 +17,8 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { error: "Failed to initialize osu! client" },
-      { status: 500 },
+      { error: "Authentication failed" },
+      { status: 401 },
     );
   }
 }

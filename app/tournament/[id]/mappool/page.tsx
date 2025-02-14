@@ -7,7 +7,7 @@ import MappoolSelector from "./components/mappool-selector";
 import MapCard from "./components/map-card";
 import { useUser } from "@/providers/user-provider";
 import MapCardCompact from "./components/map-card-compact";
-import { Button, Spinner } from "flowbite-react";
+import { Button } from "flowbite-react";
 
 export default function Mappool() {
   const { id } = useParams();
@@ -81,6 +81,24 @@ export default function Mappool() {
     );
   };
 
+  const LoadingSkeleton = () => (
+    <div className="animate-pulse space-y-8">
+      {[...Array(4)].map((_, i) => (
+        <div key={i} className="space-y-4">
+          <div className="h-8 w-32 rounded bg-gray-300 dark:bg-gray-600"></div>
+          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+            {[...Array(4)].map((_, j) => (
+              <div
+                key={j}
+                className="h-48 rounded bg-gray-200 dark:bg-gray-700"
+              ></div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   const EmptyState = () => (
     <div className=" p-8 text-start">
       <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
@@ -99,9 +117,7 @@ export default function Mappool() {
 
       <div className="container mx-auto max-w-[95%] px-4">
         {isLoading ? (
-          <div className="flex h-[calc(100vh-64px)] items-center justify-center">
-            <Spinner size="xl" />
-          </div>
+          <LoadingSkeleton />
         ) : !user ? (
           <EmptyState />
         ) : (

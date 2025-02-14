@@ -25,19 +25,32 @@ export function UserProvider({ children, initialUser }: UserProviderProps) {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    // Only fetch if we don't have an initial user and session exists
-    if (!user && session?.accessToken) {
-      fetch(`/api/osu/get-own-data`)
-        .then((res) => res.json())
-        .then(({ user }) => setUser(user))
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
-    } else if (!session?.accessToken && user) {
+    // Wait until session is loaded
+    if (status === "loading") return;
+
+    if (status === "authenticated" && session?.accessToken) {
+      // Session is valid, fetch user data if needed
+      if (!user) {
+        fetch(`/api/osu/get-own-data`)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then(({ user }) => setUser(user))
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+            setUser(null);
+            signOut({ redirect: false });
+          });
+      }
+    } else if (user) {
+      // No valid session but we have a user, clear it
       setUser(null);
       signOut({ redirect: false });
     }
-  }, [session, user]);
+  }, [session, status, user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
