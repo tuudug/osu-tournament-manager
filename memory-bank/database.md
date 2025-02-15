@@ -121,6 +121,18 @@ Tournament statistics tracking
 - `created_at`: timestamp
 - `updated_at`: timestamp
 
+### client_error_logs
+
+Client-side error tracking and monitoring
+
+- `id`: number (Primary Key)
+- `created_at`: timestamp
+- `error_type`: string (e.g., 'runtime', 'api_error', 'react_error', 'console_error')
+- `error_data`: Json (contains error message, stack trace, and context)
+- `user_id`: number | null
+- `url`: string | null (page URL where error occurred)
+- `user_agent`: string | null (browser information)
+
 ### tournament_team_invitation
 
 Team invitation management

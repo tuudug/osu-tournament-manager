@@ -147,6 +147,24 @@
 - Map statistics and trends
 - Player performance metrics
 
+## Error Logging System
+
+### Client-Side Error Tracking
+
+- Automatic logging of JavaScript runtime errors
+- React error boundary for component error capture
+- Failed API request logging
+- Console error tracking
+- Error data stored in Supabase
+- Batch processing of error logs
+- Offline support with queue system
+- Detailed error context capture:
+  - Error type and message
+  - Stack traces
+  - URL and user agent
+  - API request details for failed requests
+  - Component stack for React errors
+
 ## Integration Features
 
 ### osu! Integration

@@ -34,6 +34,36 @@ export type Database = {
   };
   public: {
     Tables: {
+      client_error_logs: {
+        Row: {
+          created_at: string;
+          error_data: Json;
+          error_type: string;
+          id: number;
+          url: string | null;
+          user_agent: string | null;
+          user_id: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          error_data: Json;
+          error_type: string;
+          id?: number;
+          url?: string | null;
+          user_agent?: string | null;
+          user_id?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          error_data?: Json;
+          error_type?: string;
+          id?: number;
+          url?: string | null;
+          user_agent?: string | null;
+          user_id?: number | null;
+        };
+        Relationships: [];
+      };
       tournament: {
         Row: {
           acronym: string;
