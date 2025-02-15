@@ -15,6 +15,7 @@ import { HiQuestionMarkCircle } from "react-icons/hi2";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
+import { InformationCard } from "../[id]/components/information-card";
 import "./markdown-guide.css";
 
 type Tournament = Database["public"]["Tables"]["tournament"]["Row"];
@@ -82,6 +83,7 @@ export function TournamentForm({
     !tournament?.rank_limit_lower && !tournament?.rank_limit_upper,
   );
   const [showMarkdownHelp, setShowMarkdownHelp] = useState(false);
+  const [description, setDescription] = useState(tournament?.description || "");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -229,85 +231,21 @@ export function TournamentForm({
         </Modal.Body>
       </Modal>
 
-      <form className="flex max-w-2xl flex-col gap-4" onSubmit={handleSubmit}>
-        <div>
-          <div className="mb-2 block">
-            <Label
-              htmlFor="name"
-              value="Tournament Name"
-              className="text-gray-900 dark:text-white"
-            />
-          </div>
-          <TextInput
-            id="name"
-            name="name"
-            required
-            defaultValue={tournament?.name}
-            className="dark:border-gray-600 dark:bg-gray-700"
-          />
-        </div>
-
-        <div>
-          <div className="mb-2 block">
-            <Label
-              htmlFor="acronym"
-              value="Tournament Acronym"
-              className="text-gray-900 dark:text-white"
-            />
-          </div>
-          <TextInput
-            id="acronym"
-            name="acronym"
-            required
-            defaultValue={tournament?.acronym}
-            helperText="A short identifier for your tournament (e.g., OWC, MWC)"
-            className="dark:border-gray-600 dark:bg-gray-700"
-          />
-        </div>
-
-        <div>
-          <div className="mb-2 flex items-center justify-between">
-            <Label
-              htmlFor="description"
-              value="Description"
-              className="text-gray-900 dark:text-white"
-            />
-            <Button
-              size="xs"
-              color="gray"
-              onClick={() => setShowMarkdownHelp(true)}
-              type="button"
-            >
-              <HiQuestionMarkCircle className="mr-1 size-4" />
-              Markdown Tips
-            </Button>
-          </div>
-          <Textarea
-            id="description"
-            name="description"
-            rows={8}
-            defaultValue={tournament?.description || ""}
-            helperText="Supports markdown formatting"
-            className="dark:border-gray-600 dark:bg-gray-700"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 md:grid-cols-2">
+        <form className="flex max-w-2xl flex-col gap-4" onSubmit={handleSubmit}>
           <div>
             <div className="mb-2 block">
               <Label
-                htmlFor="team_size"
-                value="Team Size"
+                htmlFor="name"
+                value="Tournament Name"
                 className="text-gray-900 dark:text-white"
               />
             </div>
             <TextInput
-              id="team_size"
-              name="team_size"
-              type="number"
-              min={1}
+              id="name"
+              name="name"
               required
-              defaultValue={tournament?.team_size}
+              defaultValue={tournament?.name}
               className="dark:border-gray-600 dark:bg-gray-700"
             />
           </div>
@@ -315,123 +253,194 @@ export function TournamentForm({
           <div>
             <div className="mb-2 block">
               <Label
-                htmlFor="vs_size"
-                value="VS Size"
+                htmlFor="acronym"
+                value="Tournament Acronym"
                 className="text-gray-900 dark:text-white"
               />
             </div>
             <TextInput
-              id="vs_size"
-              name="vs_size"
-              type="number"
-              min={1}
+              id="acronym"
+              name="acronym"
               required
-              defaultValue={tournament?.vs_size}
+              defaultValue={tournament?.acronym}
+              helperText="A short identifier for your tournament (e.g., OWC, MWC)"
               className="dark:border-gray-600 dark:bg-gray-700"
             />
           </div>
-        </div>
-
-        <div>
-          <div className="mb-2 flex items-center gap-2">
-            <Label
-              htmlFor="open_rank"
-              value="Open Rank"
-              className="text-gray-900 dark:text-white"
-            />
-            <ToggleSwitch
-              id="open_rank"
-              checked={isOpenRank}
-              onChange={setIsOpenRank}
-            />
-          </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {isOpenRank
-              ? "Tournament is open to all ranks"
-              : "Tournament has rank restrictions"}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="rank_limit_lower"
-                value="Minimum Rank"
-                className={`${
-                  isOpenRank
-                    ? "text-gray-400 dark:text-gray-500"
-                    : "text-gray-900 dark:text-white"
-                }`}
-              />
-            </div>
-            <TextInput
-              id="rank_limit_lower"
-              name="rank_limit_lower"
-              type="number"
-              defaultValue={tournament?.rank_limit_lower || ""}
-              className={`${
-                isOpenRank
-                  ? "cursor-not-allowed opacity-50"
-                  : "dark:border-gray-600 dark:bg-gray-700"
-              }`}
-              disabled={isOpenRank}
-            />
-          </div>
 
           <div>
-            <div className="mb-2 block">
+            <div className="mb-2 flex items-center justify-between">
               <Label
-                htmlFor="rank_limit_upper"
-                value="Maximum Rank"
-                className={`${
-                  isOpenRank
-                    ? "text-gray-400 dark:text-gray-500"
-                    : "text-gray-900 dark:text-white"
-                }`}
+                htmlFor="description"
+                value="Description"
+                className="text-gray-900 dark:text-white"
               />
+              <Button
+                size="xs"
+                color="gray"
+                onClick={() => setShowMarkdownHelp(true)}
+                type="button"
+              >
+                <HiQuestionMarkCircle className="mr-1 size-4" />
+                Markdown Tips
+              </Button>
             </div>
-            <TextInput
-              id="rank_limit_upper"
-              name="rank_limit_upper"
-              type="number"
-              defaultValue={tournament?.rank_limit_upper || ""}
-              className={`${
-                isOpenRank
-                  ? "cursor-not-allowed opacity-50"
-                  : "dark:border-gray-600 dark:bg-gray-700"
-              }`}
-              disabled={isOpenRank}
+            <Textarea
+              id="description"
+              name="description"
+              rows={8}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              helperText="Supports markdown formatting"
+              className="dark:border-gray-600 dark:bg-gray-700"
             />
           </div>
-        </div>
 
-        <div className="flex gap-2">
-          <div className="group relative inline-block">
-            <Button
-              type="submit"
-              disabled={submitLabel === "Create Tournament"}
-              className="bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-600/50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:disabled:bg-blue-600/50"
-            >
-              {submitLabel}
-            </Button>
-            {submitLabel === "Create Tournament" && (
-              <div className="invisible absolute bottom-full left-0 z-50 mb-2 min-w-80 -translate-y-0 whitespace-normal rounded-lg bg-gray-900 px-3 py-2 text-sm text-white opacity-0 transition-all duration-300 before:absolute before:left-4 before:top-full before:border-4 before:border-transparent before:border-t-gray-900 group-hover:visible group-hover:opacity-100 dark:bg-gray-700 dark:before:border-t-gray-700">
-                Tournament creation is disabled in beta, please contact me to
-                create a tournament
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <div className="mb-2 block">
+                <Label
+                  htmlFor="team_size"
+                  value="Team Size"
+                  className="text-gray-900 dark:text-white"
+                />
               </div>
-            )}
+              <TextInput
+                id="team_size"
+                name="team_size"
+                type="number"
+                min={1}
+                required
+                defaultValue={tournament?.team_size}
+                className="dark:border-gray-600 dark:bg-gray-700"
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label
+                  htmlFor="vs_size"
+                  value="VS Size"
+                  className="text-gray-900 dark:text-white"
+                />
+              </div>
+              <TextInput
+                id="vs_size"
+                name="vs_size"
+                type="number"
+                min={1}
+                required
+                defaultValue={tournament?.vs_size}
+                className="dark:border-gray-600 dark:bg-gray-700"
+              />
+            </div>
           </div>
-          <Button
-            color="gray"
-            type="button"
-            disabled={loading}
-            onClick={() => router.back()}
-          >
-            Cancel
-          </Button>
+
+          <div>
+            <div className="mb-2 flex items-center gap-2">
+              <Label
+                htmlFor="open_rank"
+                value="Open Rank"
+                className="text-gray-900 dark:text-white"
+              />
+              <ToggleSwitch
+                id="open_rank"
+                checked={isOpenRank}
+                onChange={setIsOpenRank}
+              />
+            </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {isOpenRank
+                ? "Tournament is open to all ranks"
+                : "Tournament has rank restrictions"}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <div className="mb-2 block">
+                <Label
+                  htmlFor="rank_limit_lower"
+                  value="Minimum Rank"
+                  className={`${
+                    isOpenRank
+                      ? "text-gray-400 dark:text-gray-500"
+                      : "text-gray-900 dark:text-white"
+                  }`}
+                />
+              </div>
+              <TextInput
+                id="rank_limit_lower"
+                name="rank_limit_lower"
+                type="number"
+                defaultValue={tournament?.rank_limit_lower || ""}
+                className={`${
+                  isOpenRank
+                    ? "cursor-not-allowed opacity-50"
+                    : "dark:border-gray-600 dark:bg-gray-700"
+                }`}
+                disabled={isOpenRank}
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label
+                  htmlFor="rank_limit_upper"
+                  value="Maximum Rank"
+                  className={`${
+                    isOpenRank
+                      ? "text-gray-400 dark:text-gray-500"
+                      : "text-gray-900 dark:text-white"
+                  }`}
+                />
+              </div>
+              <TextInput
+                id="rank_limit_upper"
+                name="rank_limit_upper"
+                type="number"
+                defaultValue={tournament?.rank_limit_upper || ""}
+                className={`${
+                  isOpenRank
+                    ? "cursor-not-allowed opacity-50"
+                    : "dark:border-gray-600 dark:bg-gray-700"
+                }`}
+                disabled={isOpenRank}
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <div className="group relative inline-block">
+              <Button
+                type="submit"
+                disabled={submitLabel === "Create Tournament"}
+                className="bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-600/50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:disabled:bg-blue-600/50"
+              >
+                {submitLabel}
+              </Button>
+              {submitLabel === "Create Tournament" && (
+                <div className="invisible absolute bottom-full left-0 z-50 mb-2 min-w-80 -translate-y-0 whitespace-normal rounded-lg bg-gray-900 px-3 py-2 text-sm text-white opacity-0 transition-all duration-300 before:absolute before:left-4 before:top-full before:border-4 before:border-transparent before:border-t-gray-900 group-hover:visible group-hover:opacity-100 dark:bg-gray-700 dark:before:border-t-gray-700">
+                  Tournament creation is disabled in beta, please contact me to
+                  create a tournament
+                </div>
+              )}
+            </div>
+            <Button
+              color="gray"
+              type="button"
+              disabled={loading}
+              onClick={() => router.back()}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+
+        <div className="hidden md:block">
+          <InformationCard description={description} />
         </div>
-      </form>
+      </div>
     </>
   );
 }
