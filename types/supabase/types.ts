@@ -34,6 +34,36 @@ export type Database = {
   };
   public: {
     Tables: {
+      client_error_logs: {
+        Row: {
+          created_at: string;
+          error_data: Json;
+          error_type: string;
+          id: number;
+          url: string | null;
+          user_agent: string | null;
+          user_id: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          error_data: Json;
+          error_type: string;
+          id?: number;
+          url?: string | null;
+          user_agent?: string | null;
+          user_id?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          error_data?: Json;
+          error_type?: string;
+          id?: number;
+          url?: string | null;
+          user_agent?: string | null;
+          user_id?: number | null;
+        };
+        Relationships: [];
+      };
       tournament: {
         Row: {
           acronym: string;
@@ -205,10 +235,15 @@ export type Database = {
       tournament_match: {
         Row: {
           created_at: string;
+          first_ban_team_id: number | null;
+          first_pick_team_id: number | null;
           id: number;
           internal_match_id: number;
           mappool_id: number;
           match_data: Json | null;
+          match_state: string | null;
+          misc_info: string | null;
+          mp_link: string | null;
           referee_id: number | null;
           room_id: string | null;
           round_name: string | null;
@@ -223,10 +258,15 @@ export type Database = {
         };
         Insert: {
           created_at?: string;
+          first_ban_team_id?: number | null;
+          first_pick_team_id?: number | null;
           id?: number;
           internal_match_id: number;
           mappool_id: number;
           match_data?: Json | null;
+          match_state?: string | null;
+          misc_info?: string | null;
+          mp_link?: string | null;
           referee_id?: number | null;
           room_id?: string | null;
           round_name?: string | null;
@@ -241,10 +281,15 @@ export type Database = {
         };
         Update: {
           created_at?: string;
+          first_ban_team_id?: number | null;
+          first_pick_team_id?: number | null;
           id?: number;
           internal_match_id?: number;
           mappool_id?: number;
           match_data?: Json | null;
+          match_state?: string | null;
+          misc_info?: string | null;
+          mp_link?: string | null;
           referee_id?: number | null;
           room_id?: string | null;
           round_name?: string | null;
@@ -258,6 +303,20 @@ export type Database = {
           winner_id?: number | null;
         };
         Relationships: [
+          {
+            foreignKeyName: "tournament_match_first_ban_team_id_fkey";
+            columns: ["first_ban_team_id"];
+            isOneToOne: false;
+            referencedRelation: "tournament_team";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tournament_match_first_pick_team_id_fkey";
+            columns: ["first_pick_team_id"];
+            isOneToOne: false;
+            referencedRelation: "tournament_team";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "tournament_match_mappool_id_fkey";
             columns: ["mappool_id"];
@@ -297,6 +356,7 @@ export type Database = {
       };
       tournament_match_map: {
         Row: {
+          ban_order: number | null;
           banned_by: number | null;
           id: number;
           map_id: number | null;
@@ -309,6 +369,7 @@ export type Database = {
           winner_id: number | null;
         };
         Insert: {
+          ban_order?: number | null;
           banned_by?: number | null;
           id?: number;
           map_id?: number | null;
@@ -321,6 +382,7 @@ export type Database = {
           winner_id?: number | null;
         };
         Update: {
+          ban_order?: number | null;
           banned_by?: number | null;
           id?: number;
           map_id?: number | null;

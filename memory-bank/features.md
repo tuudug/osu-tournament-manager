@@ -78,11 +78,34 @@
   - Quick command access
   - Custom command support
   - Room ID tracking
-- Match state tracking
-  - Ban/Pick phase management
+  - One-click player invite commands
+- Match state management
+  - Three distinct states: Pre-match, In-match, Post-match
+  - Visual state indicators
+  - State transition controls
+  - State persistence
+- Room setup tools
+  - MP Link management
+  - First pick/ban team selection
+  - WBD handling
+  - Tournament acronym integration
+- Map management
+  - Ban/Pick phase tracking
+  - Ban order tracking
+  - Map winner selection
   - Score tracking per map
-  - Team management
-  - Match status updates
+  - Map pool visualization
+- Team management
+  - Team score tracking
+  - Player list with invite commands
+  - Team color coding (red/blue)
+  - Ready status indicators
+- Tournament info display
+  - Forum post links
+  - Main sheet links
+  - Late procedures
+  - Double pick/ban rules
+  - Freemod rules
 
 ### Match Management
 
@@ -91,17 +114,21 @@
   - Player readiness checks
   - Map pool availability
   - Room setup tracking
+  - First pick/ban team selection
+  - MP Link validation
 - In-match tools
   - Score tracking per team
   - Map pick/ban system with history
   - IRC command integration
   - Real-time status updates
+  - Manual match completion control
+  - Back to setup option
 - Post-match processing
-  - Result submission
-  - Winner designation
-  - Statistics recording
-  - Match history
-  - Score archival
+  - Match result display
+  - Final score presentation
+  - Winner announcement
+  - Back to match option
+  - Result submission (planned)
 
 ## Team Management
 
@@ -178,3 +205,14 @@
 - Team and player updates
 - Registration status tracking
 - Invitation notifications
+
+### Toast Notifications
+
+- Global toast provider
+- Success notifications with check icon
+- Auto-dismiss after 3 seconds
+- Dark mode support
+- Multiple toast stacking
+- useToast hook for easy integration
+- Consistent styling across app
+- Accessible notifications

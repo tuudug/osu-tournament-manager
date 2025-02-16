@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { DarkThemeToggle, ThemeModeScript } from "flowbite-react";
 import "./globals.css";
 import { SessionProvider } from "./session-provider";
+import { ToastProvider } from "./components/common/toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
         <div className="fixed bottom-2 left-2">
           <DarkThemeToggle />
         </div>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </SessionProvider>
       </body>
     </html>
   );

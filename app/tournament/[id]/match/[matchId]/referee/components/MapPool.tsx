@@ -96,7 +96,7 @@ export default function MapPool({
                       {banningTeam}
                     </div>
                     <Select
-                      value={currentBan.map?.id || ""}
+                      value={bans[index]?.map?.id || ""}
                       onChange={(e) => {
                         const map = maps.find((m) => m.id === e.target.value);
                         onMapBan(index, map || null);
@@ -105,7 +105,11 @@ export default function MapPool({
                     >
                       <option value="">Select Map</option>
                       {maps
-                        .filter((map) => !isMapBanned(map) && !isMapPicked(map))
+                        .filter(
+                          (map) =>
+                            (!isMapBanned(map) && !isMapPicked(map)) ||
+                            map.id === currentBan.map?.id,
+                        )
                         .map((map) => (
                           <option key={map.id} value={map.id}>
                             {map.name}
@@ -152,7 +156,8 @@ export default function MapPool({
                       {maps
                         .filter(
                           (map) =>
-                            !isMapPicked(map) || map.id === currentPick.map?.id,
+                            (!isMapPicked(map) && !isMapBanned(map)) ||
+                            map.id === currentPick.map?.id,
                         )
                         .map((map) => (
                           <option key={map.id} value={map.id}>

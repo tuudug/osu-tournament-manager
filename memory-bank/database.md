@@ -63,6 +63,11 @@ Match information and tracking
 - `created_at`: string
 - `scheduled_time`: timestamp
 - `status`: enum ('scheduled', 'ongoing', 'completed')
+- `match_state`: string ('pre-match', 'in-match', 'post-match')
+- `mp_link`: string | null
+- `misc_info`: string | null
+- `first_pick_team_id`: number | null (Foreign Key → tournament_team.id)
+- `first_ban_team_id`: number | null (Foreign Key → tournament_team.id)
 - `winner_id`: number (Foreign Key → tournament_team.id)
 - `score_team1`: number
 - `score_team2`: number
@@ -105,6 +110,7 @@ Match map picks/bans tracking
 - `status`: enum ('banned', 'picked', 'played')
 - `picked_by`: number (Foreign Key → tournament_team.id)
 - `banned_by`: number (Foreign Key → tournament_team.id)
+- `ban_order`: number | null
 
 ### tournament_statistics
 
@@ -188,10 +194,13 @@ Team invitation management
 - Referee assignment
 - Match data storage (JSON for flexibility)
 - Match scheduling
-- Match status tracking
+- Match state tracking (pre-match, in-match, post-match)
 - Score tracking
-- Map pick/ban system
+- Map pick/ban system with order tracking
 - Room management
+- First pick/ban team tracking
+- MP Link storage
+- Tournament-specific info storage (markdown)
 
 ### Team System
 

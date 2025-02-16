@@ -4,6 +4,12 @@
 
 - `/app/components/layout/header.tsx` - Main navigation header
 - `/app/components/common/avatar.tsx` - User avatar component
+- `/app/components/common/toast.tsx` - Global toast notification system
+  - ToastProvider for app-wide notifications
+  - useToast hook for component integration
+  - Success toast with check icon
+  - Auto-dismiss functionality
+  - Dark mode support
 
 ## Tournament Components
 
@@ -58,12 +64,36 @@
 
 ### Referee Components
 
-- `/app/tournament/referee/[id]/components/match.tsx` - Match management interface
-- `/app/tournament/referee/[id]/components/pre-match.tsx` - Pre-match setup
-- `/app/tournament/referee/[id]/components/post-match.tsx` - Post-match results
-- `/app/tournament/referee/[id]/components/sidebar.tsx` - Referee sidebar controls
-- `/app/tournament/referee/[id]/components/map-status.tsx` - Map pick/ban status
-- `/app/tournament/referee/[id]/components/score-input.tsx` - Score input interface
+- `/app/tournament/[id]/match/[matchId]/referee/components/RoomSetup.tsx` - Pre-match room setup
+  - MP Link management
+  - First pick/ban selection
+  - WBD handling
+  - Tournament acronym integration
+- `/app/tournament/[id]/match/[matchId]/referee/components/TeamScore.tsx` - Team score and player management
+  - Score display
+  - Player list with invite commands
+  - Team color theming
+  - Toast notifications for actions
+- `/app/tournament/[id]/match/[matchId]/referee/components/MapPool.tsx` - Map pool management
+  - Ban/Pick interface
+  - Ban order tracking
+  - Map winner selection
+  - Score tracking
+- `/app/tournament/[id]/match/[matchId]/referee/components/Commands.tsx` - IRC command management
+  - Pre-made commands
+  - Quick access buttons
+  - Command templates
+- `/app/tournament/[id]/match/[matchId]/referee/components/MiscInfo.tsx` - Tournament information display
+  - Forum post links
+  - Main sheet links
+  - Late procedures
+  - Double pick/ban rules
+  - Freemod rules
+- `/app/tournament/[id]/match/[matchId]/referee/components/PostMatch.tsx` - Post-match interface
+  - Match result display
+  - Winner announcement
+  - Final scores
+  - Navigation controls
 
 ## Component Hierarchy
 
