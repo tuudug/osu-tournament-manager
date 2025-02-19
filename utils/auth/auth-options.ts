@@ -11,22 +11,32 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
+      }
+      if (user) {
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      // First set the accessToken from the token
+      // Set the accessToken from the token
       session.accessToken = token.accessToken as string;
 
-      // Then validate it if it exists
+      // Ensure user object exists
+      if (!session.user) {
+        session.user = {};
+      }
+
+      // Set the user ID from the token
+      session.user.id = token.id as string;
+
+      // Validate access token if it exists
       if (session.accessToken) {
         try {
           const decodedToken: { exp: number } = jwtDecode(session.accessToken);
           if (decodedToken.exp * 1000 < Date.now()) {
-            // Only clear if explicitly expired
             session.accessToken = undefined;
           }
         } catch (error) {

@@ -8,14 +8,21 @@ import MapCard from "./components/map-card";
 import { useUser } from "@/providers/user-provider";
 import MapCardCompact from "./components/map-card-compact";
 import { Button } from "flowbite-react";
+import { HiPencil } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
+import { Database } from "@/types/supabase/types";
+
+type Tournament = Database["public"]["Tables"]["tournament"]["Row"];
 
 export default function Mappool() {
   const { id } = useParams();
+  const router = useRouter();
   const [mappools, setMappools] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useUser();
   const [isCompactView, setIsCompactView] = useState(false);
   const [selectedMaps, setSelectedMaps] = useState<string[]>([]);
+  const [tournament, setTournament] = useState<Tournament | null>(null);
 
   interface MapPoolType {
     id: number;
@@ -32,6 +39,22 @@ export default function Mappool() {
     >;
   }
   const [selectedPool, setSelectedPool] = useState<MapPoolType | null>(null);
+
+  useEffect(() => {
+    const fetchTournament = async () => {
+      try {
+        const response = await fetch(`/api/tournament/get?id=${id}`);
+        const data = await response.json();
+        if (response.ok && data.data) {
+          setTournament(data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch tournament:", error);
+      }
+    };
+
+    fetchTournament();
+  }, [id]);
 
   useEffect(() => {
     const fetchMappools = async () => {
@@ -81,6 +104,12 @@ export default function Mappool() {
     );
   };
 
+  const canAddMaps =
+    tournament &&
+    user &&
+    (tournament.host_id === Number(user.id) ||
+      tournament.pooler_ids?.includes(Number(user.id)));
+
   const LoadingSkeleton = () => (
     <div className="animate-pulse space-y-8">
       {[...Array(4)].map((_, i) => (
@@ -100,7 +129,7 @@ export default function Mappool() {
   );
 
   const EmptyState = () => (
-    <div className=" p-8 text-start">
+    <div className="p-8 text-start">
       <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
         No Mappools Found
       </h3>
@@ -133,15 +162,29 @@ export default function Mappool() {
                   onPoolSelect={handlePoolSelect}
                 />
               )}
-              <Button
-                color="gray"
-                size="sm"
-                onClick={() => setIsCompactView(!isCompactView)}
-              >
-                {isCompactView
-                  ? "Switch to Normal View"
-                  : "Switch to Compact View"}
-              </Button>
+              <div className="flex items-center gap-2">
+                {canAddMaps && (
+                  <Button
+                    color="gray"
+                    size="sm"
+                    onClick={() =>
+                      router.push(`/tournament/${id}/mappool/edit`)
+                    }
+                  >
+                    <HiPencil className="mr-2 size-4" />
+                    Edit Mappool
+                  </Button>
+                )}
+                <Button
+                  color="gray"
+                  size="sm"
+                  onClick={() => setIsCompactView(!isCompactView)}
+                >
+                  {isCompactView
+                    ? "Switch to Normal View"
+                    : "Switch to Compact View"}
+                </Button>
+              </div>
             </div>
 
             {selectedPool && (
@@ -172,24 +215,32 @@ export default function Mappool() {
                           isCompactView ? (
                             <MapCardCompact
                               key={map.id}
-                              mapId={map.osu_map_id}
+                              mapId={map.osu_map_id.toString()}
                               identifier={`${prefix}${map.map_number}`}
                               comment={map.comment}
                               pooler={map.pooler}
                               mapData={map.map_data}
-                              isSelected={selectedMaps.includes(map.osu_map_id)}
-                              onSelect={() => handleMapSelect(map.osu_map_id)}
+                              isSelected={selectedMaps.includes(
+                                map.osu_map_id.toString(),
+                              )}
+                              onSelect={() =>
+                                handleMapSelect(map.osu_map_id.toString())
+                              }
                             />
                           ) : (
                             <MapCard
                               key={map.id}
-                              mapId={map.osu_map_id}
+                              mapId={map.osu_map_id.toString()}
                               identifier={`${prefix}${map.map_number}`}
                               comment={map.comment}
                               pooler={map.pooler}
                               mapData={map.map_data}
-                              isSelected={selectedMaps.includes(map.osu_map_id)}
-                              onSelect={() => handleMapSelect(map.osu_map_id)}
+                              isSelected={selectedMaps.includes(
+                                map.osu_map_id.toString(),
+                              )}
+                              onSelect={() =>
+                                handleMapSelect(map.osu_map_id.toString())
+                              }
                             />
                           ),
                         )}
